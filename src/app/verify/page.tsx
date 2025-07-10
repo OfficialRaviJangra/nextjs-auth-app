@@ -1,7 +1,7 @@
 "use client"
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, use, Suspense } from "react";
 
 export default function VerifyPage() {
     const [successMessage, setSuccessMessage] = useState("");
@@ -32,12 +32,16 @@ export default function VerifyPage() {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-                <h1 className="text-2xl font-bold mb-4">{successMessage}</h1>
-                <div className="text-gray-600 mb-4">
-                    {successMessage.includes("successfully") ? <p>You can now close this tab.</p> : <p>If you continue to experience issues, please contact support.</p>}
+            <Suspense fallback={
+                <h1>Loading...</h1>
+            }>
+                <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+                    <h1 className="text-2xl font-bold mb-4">{successMessage}</h1>
+                    <div className="text-gray-600 mb-4">
+                        {successMessage.includes("successfully") ? <p>You can now close this tab.</p> : <p>If you continue to experience issues, please contact support.</p>}
+                    </div>
                 </div>
-            </div>
+            </Suspense>
         </div>
     );
 }
