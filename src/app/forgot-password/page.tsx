@@ -15,10 +15,16 @@ export default function ForgotPasswordPage() {
         }
     }
     return (
-        <div className="flex flex-col items-center justify-center h-screen">
+        <div className="flex flex-col items-center justify-center h-screen gap-2">
             <h1 className="text-2xl font-bold">Forgot Password</h1>
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input
+                    className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
                 <button type="submit" className="bg-blue-500 text-white p-2 rounded-md cursor-pointer">Reset Password</button>
             </form>
         </div>

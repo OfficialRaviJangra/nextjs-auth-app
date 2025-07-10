@@ -39,7 +39,7 @@ export default function ResetPasswordForm() {
     };
 
     return (
-        <div className="bg-white p-8 rounded-lg shadow-md w-96">
+        <div className="bg-black p-8 rounded-lg shadow-md w-96">
             <h1 className="text-2xl font-bold text-center mb-6">Reset Password</h1>
             {error && (
                 <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
@@ -57,14 +57,14 @@ export default function ResetPasswordForm() {
                     placeholder="New Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
                 />
                 <input
                     type="password"
                     placeholder="Confirm Password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-black"
                 />
                 <button
                     type="submit"

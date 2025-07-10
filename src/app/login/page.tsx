@@ -14,11 +14,21 @@ export default function LoginPage() {
     });
     const [loading, setLoading] = useState(false);
 
+
+
     const onLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             setLoading(true);
             const response = await axios.post('/api/auth/login', user);
+            toast.promise(
+                response ? Promise.resolve(response) : Promise.reject(),
+                {
+                    loading: 'Logging in...',
+                    success: <b>Login successful!</b>,
+                    error: <b>Login failed.</b>,
+                },
+            );
             if (response.status === 200) {
                 router.push('/');
                 router.refresh();
