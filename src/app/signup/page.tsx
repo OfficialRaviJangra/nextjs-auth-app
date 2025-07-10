@@ -25,9 +25,10 @@ export default function SignupPage() {
             } else {
                 throw new Error(response.data.error || 'Something went wrong');
             }
-        } catch (error: any) {
-            console.error(error);
-            alert(error.response?.data?.error || error.message);
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error("Error in signup:", error.message);
+            }
         } finally {
             setLoading(false);
         }
