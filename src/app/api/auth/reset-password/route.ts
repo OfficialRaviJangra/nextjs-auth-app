@@ -41,10 +41,12 @@ export async function POST(req: NextRequest){
             { status: 200 }
         );
 
-    } catch (error: any) {
-        console.error("Reset password error:", error);
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error("Error in reset password:", error.message);
+        }   
         return NextResponse.json(
-            { message: "Internal Server Error", error: error.message },
+            { message: "Internal Server Error"},
             { status: 500 }
         );
     }
