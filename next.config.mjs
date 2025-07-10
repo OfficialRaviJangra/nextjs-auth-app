@@ -29,34 +29,6 @@ const nextConfig = {
       },
     ];
   },
-  async redirects() {
-    return [
-      {
-        source: '/dashboard',
-        has: [
-          {
-            type: 'cookie',
-            key: 'token',
-            missing: true,
-          },
-        ],
-        permanent: false,
-        destination: '/login',
-      },
-      {
-        source: '/profile',
-        has: [
-          {
-            type: 'cookie',
-            key: 'token',
-            missing: true,
-          },
-        ],
-        permanent: false,
-        destination: '/login',
-      }
-    ];
-  },
 };
 
 export default nextConfig;
