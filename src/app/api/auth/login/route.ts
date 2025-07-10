@@ -4,7 +4,7 @@ import User from "@/models/user.model";
 import bcrypt from "bcryptjs";
 import { createToken } from "@/helpers/token.helper";
 
-export async function POST(request: NextRequest, response: NextResponse) {
+export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
         const { email, password } = reqBody;

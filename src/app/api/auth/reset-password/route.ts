@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/user.model";
-import { createToken } from "@/helpers/token.helper";
 import bcrypt from "bcryptjs";
 import { connect } from "@/lib/db";
 
-export async function POST(req: NextRequest, res: NextResponse){
+export async function POST(req: NextRequest){
     try {
         const body = await req.json();
         const { password, token } = body;
