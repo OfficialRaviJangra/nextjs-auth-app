@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-export default function ResetPasswordPage(){
+export default function ResetPasswordPage() {
     const searchParams = useSearchParams();
     const token = searchParams.get("token");
     const [password, setPassword] = useState("");
@@ -13,9 +13,9 @@ export default function ResetPasswordPage(){
     const [success, setSuccess] = useState("");
     const router = useRouter();
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if(password !== confirmPassword){
+        if (password !== confirmPassword) {
             setError("Passwords do not match");
             return;
         }
@@ -25,13 +25,18 @@ export default function ResetPasswordPage(){
                 token
             });
             console.log(response);
-            if(response.status === 200){
+            if (response.status === 200) {
                 router.push("/login");
             }
             setSuccess("Password reset successfully");
             setError("")
         } catch (error) {
-            setError("Failed to reset password");
+            if (axios.isAxiosError(error)) {
+                // Handle Axios error
+                setError(error.response?.data?.error || "Failed to reset password");
+            } else {
+                setError("Failed to reset password");
+            }
             setSuccess("");
         }
     };
@@ -51,21 +56,21 @@ export default function ResetPasswordPage(){
                     </div>
                 )}
                 <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-                    <input 
-                        type="password" 
-                        placeholder="New Password" 
-                        value={password} 
+                    <input
+                        type="password"
+                        placeholder="New Password"
+                        value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
-                    <input 
-                        type="password" 
-                        placeholder="Confirm Password" 
-                        value={confirmPassword} 
+                    <input
+                        type="password"
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
-                    <button 
+                    <button
                         type="submit"
                         className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >

@@ -17,7 +17,7 @@ export const sendEmail = async (email: string) => {
     await user.save();
 
 
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
     host: "sandbox.smtp.mailtrap.io",
     port: 2525,
     auth: {

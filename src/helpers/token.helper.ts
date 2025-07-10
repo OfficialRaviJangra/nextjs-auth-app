@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-export const createToken = (id: string): any => {
+export const createToken = (id: string): { accessToken: string; refreshToken: string } => {
     const accessToken = jwt.sign({ id }, process.env.JWT_SECRET!, {
         expiresIn: "1h"
     });
@@ -15,6 +15,10 @@ export const verifyToken = (token: string) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET!);
         return decoded;
     } catch (error) {
+        if (error instanceof jwt.JsonWebTokenError) {
+            // Handle JWT error
+            console.error("Invalid token:", error.message);
+        }
         return null;
     }
 }; 

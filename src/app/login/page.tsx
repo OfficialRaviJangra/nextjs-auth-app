@@ -25,9 +25,12 @@ export default function LoginPage() {
             } else {
                 throw new Error(response.data.error || 'Something went wrong');
             }
-        } catch (error: any) {
-            console.error(error);
-            alert(error.response?.data?.error || error.message);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                // Handle Axios error
+                console.error(error);
+                alert(error.response?.data?.error || error.message);
+            }
         } finally {
             setLoading(false);
         }

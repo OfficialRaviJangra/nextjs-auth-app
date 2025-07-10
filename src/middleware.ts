@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { verifyToken } from './helpers/token.helper';
 
 export async function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
