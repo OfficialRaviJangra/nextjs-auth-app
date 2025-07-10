@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function SignupPage() {
     const router = useRouter();
@@ -19,10 +20,13 @@ export default function SignupPage() {
         try {
             setLoading(true);
             const response = await axios.post('/api/auth/signup', user);
-
+            if (response?.data?.success === true) {
+                toast.success('Account created successfully! Please check your email to verify your account.');
+            }
             if (response.status === 200) {
                 router.push('/login');
-            } else {
+            }
+            else {
                 throw new Error(response.data.error || 'Something went wrong');
             }
         } catch (error) {
@@ -36,6 +40,7 @@ export default function SignupPage() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+            <div><Toaster /></div>
             <div className="max-w-md w-full space-y-8">
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">

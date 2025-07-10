@@ -7,20 +7,32 @@ export async function POST(req: NextRequest){
     try {
         const body = await req.json();
         const { password, token } = body;
-
+        
         if (!password || !token) {
             return NextResponse.json(
                 { message: "Password and token are required" },
                 { status: 400 }
             );
         }
-
+        
         await connect();
-
-        const user = await User.findOne({
+        
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await User.findOneAndUpdate({
             forgotPasswordToken: token,
             forgotPasswordTokenExpiry: { $gt: Date.now() }
-        });
+        },
+        {
+            $set: { 
+                forgotPasswordToken: undefined, 
+                forgotPasswordTokenExpiry: undefined, 
+                password: hashedPassword }
+        },
+        {
+            new: true,
+            runValidators: true
+        }
+    );
 
         if (!user) {
             return NextResponse.json(
@@ -29,11 +41,6 @@ export async function POST(req: NextRequest){
             );
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        user.password = hashedPassword;
-        user.forgotPasswordToken = undefined;
-        user.forgotPasswordTokenExpiry = undefined;
         await user.save();
 
         return NextResponse.json(

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
-
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -22,14 +22,17 @@ export default function LoginPage() {
             if (response.status === 200) {
                 router.push('/');
                 router.refresh();
-            } else {
+            } else if (response.status === 403) {
+                toast.error('User is not verified.');
+            }
+            else {
                 throw new Error(response.data.error || 'Something went wrong');
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 // Handle Axios error
                 console.error(error);
-                alert(error.response?.data?.error || error.message);
+                toast.error(error.response?.data?.error || error.message);
             }
         } finally {
             setLoading(false);
@@ -38,6 +41,7 @@ export default function LoginPage() {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+            <div><Toaster /></div>
             <div className="max-w-md w-full space-y-8">
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
