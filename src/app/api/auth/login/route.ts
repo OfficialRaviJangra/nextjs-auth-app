@@ -28,12 +28,14 @@ export async function POST(request: NextRequest) {
                 { status: 400 }
             );
         }
-        if(!user.isVerified) {
-            return NextResponse.json(
-                { error: "User is not verified" },
-                { status: 403 }
-            );
-        }
+        // To verify if user is verified
+        
+        // if(!user.isVerified) {
+        //     return NextResponse.json(
+        //         { error: "User is not verified" },
+        //         { status: 403 }
+        //     );
+        // }
         // Create token
         const { accessToken, refreshToken } = createToken(user._id);
         user.refreshToken = refreshToken;
